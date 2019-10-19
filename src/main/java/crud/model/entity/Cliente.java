@@ -13,6 +13,8 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
 @Entity
 @Table(schema = "clientes")
 public class Cliente implements Serializable {
@@ -29,14 +31,20 @@ public class Cliente implements Serializable {
 
 	@Column(name = "create_at")
 	@Temporal(TemporalType.DATE)
+	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	private Date createAt;
 
 	private static final long serialVersionUID = 1L;
 
-	@PrePersist
-	public void prePersist() {
-		createAt=new Date();
-	}
+	
+	/**
+	 * Esta funcion permite agregar la fecha automaticmente antes que se inicie la clase
+	 * @return
+	 */
+//	@PrePersist
+//	public void prePersist() {
+//		createAt=new Date();
+//	}
 	
 	
 	public long getId() {

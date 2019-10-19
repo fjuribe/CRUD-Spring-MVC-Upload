@@ -9,10 +9,10 @@
 <div class="container">
  <h1 class="text-primary border border-success border-top-0 border-right-0 border-left-0" th:text="${titulo}"></h1>
 <form th:action="@{/form}" th:object="${cliente}" method="post">
-    <table>
+    <table class="table table-bordered">
 
          <tr>
-            <td>Nombre</td>
+            <td syle="width:200px;">Nombre</td>
             <td><input type="text" th:field="*{nombre}" class="form-control"/></td>
         </tr>
         
@@ -25,6 +25,13 @@
             <td>Email</td>
             <td><input type="email" th:field="*{email}" class="form-control"/></td>
         </tr>
+        
+       <tr>
+          <td>Fecha</td>
+              <td><input type="text" class="form-control" th:field="*{createAt}"/></td> 
+
+       </tr>
+        
         
         <tr>
             <td><input type="submit" value="Crear cliente" class="form-control btn btn-primary"/></td>
