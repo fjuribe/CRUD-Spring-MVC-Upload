@@ -15,21 +15,22 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.bind.support.SessionStatus;
 
-import crud.model.dao.IClienteDao;
+//import crud.model.dao.IClienteDao;
 import crud.model.entity.Cliente;
+import crud.model.service.IClienteService;
 
 @Controller
 @SessionAttributes("cliente")
 public class ClienteController {
 
 	@Autowired
-	@Qualifier("clienteDaoJpa")
-	private IClienteDao clienteDao;
+	@Qualifier("clienteServiceImpl")
+	private IClienteService clienteService;
 	
 	@RequestMapping(value="/listar",method = RequestMethod.GET)
 	public String listar(Model model) {
 		model.addAttribute("titulo","listado de clientes");
-		model.addAttribute("clientes",clienteDao.findAll());
+		model.addAttribute("clientes",clienteService.findAll());
 		return "listar";
 	}
 	
@@ -48,7 +49,7 @@ public class ClienteController {
 			return "form";
 		}
 		
-		clienteDao.save(cliente);
+		clienteService.save(cliente);
 		status.setComplete();
 		return "redirect:listar";
 	}
@@ -58,7 +59,7 @@ public class ClienteController {
 	public String editar(@PathVariable(value="id") Long id, Map<String ,Object> model) {
 		Cliente cliente=null;
 		if(id>0) {
-			cliente=clienteDao.findOne(id);
+			cliente=clienteService.findOne(id);
 		}else {
 			return "redirect:/listar";
 		}	
@@ -70,7 +71,7 @@ public class ClienteController {
 	@RequestMapping("/eliminar/{id}")
 	public String eliminar(@PathVariable("id") Long id) {
 		if(id>0) {
-			clienteDao.delete(id);
+			clienteService.delete(id);
 		}
 		return "redirect:/listar";
 	}
