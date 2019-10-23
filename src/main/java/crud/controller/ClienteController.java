@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.bind.support.SessionStatus;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 //import crud.model.dao.IClienteDao;
 import crud.model.entity.Cliente;
@@ -43,24 +44,30 @@ public class ClienteController {
 	}
 	
 	@RequestMapping(value = "/form",method =RequestMethod.POST)
-	public String guardar(@Valid Cliente cliente,BindingResult result,Model model,SessionStatus status) {
+	public String guardar(@Valid Cliente cliente,BindingResult result,Model model,RedirectAttributes flash,SessionStatus status) {
 		if(result.hasErrors()) {
 			model.addAttribute("titulo","formulario de cliente");
 			return "form";
 		}
+		String mensajeFlash=(cliente.getId()!=null)?"Cliente editado con exito!":"Cliente creado con exito!";
 		
 		clienteService.save(cliente);
 		status.setComplete();
+		flash.addFlashAttribute("success",mensajeFlash);
 		return "redirect:listar";
 	}
 	
 	
 	@RequestMapping(value="/form/{id}")
-	public String editar(@PathVariable(value="id") Long id, Map<String ,Object> model) {
+	public String editar(@PathVariable(value="id") Long id, Map<String ,Object> model,RedirectAttributes flash) {
 		Cliente cliente=null;
 		if(id>0) {
 			cliente=clienteService.findOne(id);
+			if(cliente==null) {
+			flash.addFlashAttribute("error", "El Id del cliente no existe en la BBDD");
+			}
 		}else {
+			flash.addFlashAttribute("error", "El Id del cliente no puede ser 0");
 			return "redirect:/listar";
 		}	
 		model.put("cliente", cliente);
@@ -69,9 +76,10 @@ public class ClienteController {
 	}
 	
 	@RequestMapping("/eliminar/{id}")
-	public String eliminar(@PathVariable("id") Long id) {
+	public String eliminar(@PathVariable("id") Long id,RedirectAttributes flash) {
 		if(id>0) {
 			clienteService.delete(id);
+			flash.addFlashAttribute("success", "cliente eliminado con exito");
 		}
 		return "redirect:/listar";
 	}
