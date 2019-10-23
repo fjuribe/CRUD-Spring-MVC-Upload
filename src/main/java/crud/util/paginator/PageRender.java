@@ -20,7 +20,8 @@ public class PageRender<T>{
 		this.page = page;
 		this.paginas=new ArrayList<PageItem>();
 		numElementosPorPagina=page.getSize();
-		totalPaginas=page.getTotalPages()+1;
+		totalPaginas=page.getTotalPages();
+		paginaActual=page.getNumber()+1;
 		
 		int desde,hasta;
 		if(totalPaginas<=numElementosPorPagina) {
@@ -65,11 +66,11 @@ public class PageRender<T>{
 		return paginas;
 	}
 	
-	public boolean inFirst() {
+	public boolean isFirst() {
 		return page.isFirst();
 	}
 	
-    public boolean insLast() {
+    public boolean isLast() {
     	return page.isLast();
     }	
     
