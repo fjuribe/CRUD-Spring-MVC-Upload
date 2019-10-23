@@ -38,7 +38,7 @@ public class ClienteController {
 		/**
 		 * se agrega para hacer la paginacion
 		 */
-		Pageable pageRequest=PageRequest.of(page, 4);
+		Pageable pageRequest=PageRequest.of(page,6);
 		
 		Page<Cliente> clientes=clienteService.findAll(pageRequest);
 		
