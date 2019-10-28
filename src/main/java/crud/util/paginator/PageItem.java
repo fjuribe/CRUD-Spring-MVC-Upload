@@ -19,9 +19,5 @@ public class PageItem {
 	public boolean isActual() {
 		return actual;
 	}
-
-
-
-	
 	
 }
