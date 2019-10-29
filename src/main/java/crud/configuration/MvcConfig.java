@@ -1,6 +1,6 @@
 package crud.configuration;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+//import org.slf4j.Logger;
+//import org.slf4j.LoggerFactory;
 import org.springframework.context.annotation.Configuration;
 
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
@@ -9,7 +9,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 public class MvcConfig implements WebMvcConfigurer{
 
 	
-	private final Logger log=LoggerFactory.getLogger(getClass());
+	//private final Logger log=LoggerFactory.getLogger(getClass());
 	/**
 	 * para agregar recursos estaticos
 	 */
