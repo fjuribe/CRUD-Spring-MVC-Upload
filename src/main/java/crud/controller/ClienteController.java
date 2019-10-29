@@ -5,9 +5,11 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Map;
+import java.util.UUID;
 
 import javax.validation.Valid;
 
+import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.data.domain.Page;
@@ -26,6 +28,7 @@ import org.springframework.web.bind.support.SessionStatus;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+
 //import crud.model.dao.IClienteDao;
 import crud.model.entity.Cliente;
 import crud.model.service.IClienteService;
@@ -39,6 +42,8 @@ public class ClienteController {
 	@Qualifier("clienteServiceImpl")
 	private IClienteService clienteService;
 	
+	
+	private final Logger log=org.slf4j.LoggerFactory.getLogger(getClass());
 	
 	@GetMapping(value = "/ver/{id}")
 	public String ver(@PathVariable("id") Long id,Map<String,Object> model,RedirectAttributes flash) {
@@ -84,15 +89,19 @@ public class ClienteController {
 			return "form";
 		}
 		if(!foto.isEmpty()) {
+			String  uniqueFilename=UUID.randomUUID().toString()+"_"+foto.getOriginalFilename();
+			Path rootPath=Paths.get("uploads").resolve(uniqueFilename);
+			Path rootAbsoluPath=rootPath.toAbsolutePath();
 			
-			String rootPath="C://spring5//uploads";
+			log.info("rootPath"+rootPath);
+			log.info("rootAbsolutPath"+rootAbsoluPath);
+			
 			try {
-				byte[] bytes=foto.getBytes();
-				//ruta final 
-				Path rutaCompleta=Paths.get(rootPath+"//"+foto.getOriginalFilename());
-				Files.write(rutaCompleta,bytes);
-				flash.addFlashAttribute("info","Has subido correctamente'"+foto.getOriginalFilename()+"'");
-				cliente.setFoto(foto.getOriginalFilename());
+				Files.copy(foto.getInputStream(),rootAbsoluPath);
+			
+				flash.addFlashAttribute("info","Has subido correctamente'"+uniqueFilename+"'");
+				
+				cliente.setFoto(uniqueFilename);
 			} catch (IOException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();

@@ -1,5 +1,9 @@
 package crud.configuration;
 
+import java.nio.file.Paths;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
@@ -7,6 +11,8 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 @Configuration
 public class MvcConfig implements WebMvcConfigurer{
 
+	
+	private final Logger log=LoggerFactory.getLogger(getClass());
 	/**
 	 * para agregar recursos estaticos
 	 */
@@ -14,7 +20,9 @@ public class MvcConfig implements WebMvcConfigurer{
 	public void addResourceHandlers(ResourceHandlerRegistry registry) {
 		// TODO Auto-generated method stub
 		WebMvcConfigurer.super.addResourceHandlers(registry);
-
-		registry.addResourceHandler("/uploads/**").addResourceLocations("file:/C://spring5//uploads/");
+		
+        String resorcePath=Paths.get("uploads").toAbsolutePath().toUri().toString();
+        log.info(resorcePath);
+		registry.addResourceHandler("/uploads/**").addResourceLocations(resorcePath);
 	}
 }
