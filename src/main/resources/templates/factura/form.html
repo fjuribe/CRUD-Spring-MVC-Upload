@@ -18,7 +18,7 @@
 					
 					<div class="form-group row">
 						<label for="cliente" class="col-sm-2 col-form-label" th:text="'Cliente'"></label>
-						<div class="clo-sm-6">
+						<div class="col-sm-6">
 							<input
 								th:value="${factura.cliente.nombre}+' '+${factura.cliente.apellido}"
 								disable='disabled' class="form-control" />
@@ -27,7 +27,7 @@
 
 						<div class="form-group row">
 							<label for="descripcion" class="col-sm-2 col-form-label" th:text="'Descripción'"></label>
-							<div class="clo-sm-6">
+							<div class="col-sm-6">
 								<input type="text" th:field="*{descripcion}"
 									class="form-control" />
 							</div>
@@ -36,11 +36,19 @@
 
 						<div class="form-group row">
 							<label for="observacion" class="col-sm-2 col-form-label" th:text="'Observación'"></label>
-							<div class="clo-sm-6">
+							<div class="col-sm-6">
 								<textarea th:field="*{observacion}" class="form-control"></textarea>
 							</div>
 						</div>
-
+						
+						<div class="form-group row">
+							<label for="buscar_producto" class="col-sm-2 col-form-label" th:text="'buscar producto'"></label>
+							<div class="col-sm-6">
+								<input type="text" name="buscar_producto" id="buscar_producto"
+									class="form-control" />
+							</div>
+						</div>
+						
 						<div class="form-group row">
 							<div class="clo-sm-6">
 								<input type="submit" th:value="${titulo}"
@@ -54,16 +62,7 @@
 
 
 	</div>
-	<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
-		integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
-		crossorigin="anonymous"></script>
-	<script
-		src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
-		integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
-		crossorigin="anonymous"></script>
-	<script
-		src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
-		integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
-		crossorigin="anonymous"></script>
+	<footer th:replace="layout/layout::footer"> </footer>
+	<script th:replace="factura/js/autocomplete-productos::javascript"></script>
 </body>
 </html>
