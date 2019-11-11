@@ -24,4 +24,6 @@ import crud.model.entity.Producto;
 	public List<Producto> findByNombre(String term);
 	
 	public void saveFactura(Factura factura);
+		
+	public Producto findProductoById(Long id);
 }
