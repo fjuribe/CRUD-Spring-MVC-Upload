@@ -19,6 +19,8 @@ import crud.model.entity.Producto;
 	
 	public Cliente findOne(Long id);
 	
+	public Cliente fetchByIdWithFacturas(Long id);
+	
 	public void delete(Long id);
 	
 	public List<Producto> findByNombre(String term);
