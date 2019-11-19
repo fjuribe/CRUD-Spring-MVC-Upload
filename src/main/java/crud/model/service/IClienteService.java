@@ -30,4 +30,6 @@ import crud.model.entity.Producto;
 	public Factura findFacturaById(Long id);
 	
 	public void deleteFactura(Long id);
+	
+	public Factura fetchFacturaByIdWithClienteWhithItemFacturaWithProducto(Long id);
 }
