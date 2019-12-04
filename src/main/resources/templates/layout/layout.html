@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head th:fragment="head">
 <meta charset="UTF-8">
 <title th:text="'String boot:MVC +Thymeleaf '+${titulo}"></title>
@@ -23,6 +23,23 @@
 					<li class="nav-item"><a class="nav-link" th:href="@{/listar}">Clientes</a>
 					</li>
 				</ul>
+				
+				<ul class="navbar-nav navbar-right">
+				   <li sec:authorize="!isAuthenticated()"><a class="btn btn-outline-primary" th:href="@{/login}">Sign IN</a></li>
+
+					<li sec:authorize="isAuthenticated()" class="dropdown show">
+						<a class="btn btn-outline-primary dropdown-toggle" href="#"
+							role="button" id="dropdownMenuLink" data-toggle="dropdown"
+							aria-haspopup="true" aria-expanded="false"><span sec:authentication="name"></span> </a>
+
+						<div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+							<form id="logoutForm" th:action="@{/logaut}" method="post">
+							<button type="submit" onclick="document.getElementById('logoutForm').submit();" class="dropdown-item">Sign Out</button>
+							   <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
+							</form>
+						</div>
+					</li>
+				</ul>
 			</div>
 		</nav>
 		
@@ -38,6 +55,10 @@
 	<footer th:fragment="footer" class="container">
 		<hr />
 		<img th:src="@{/images/spring.png}" alt="Spring logo" width="50px"/>
+		<p sec:authorize="isAuthenticated()">
+		 
+                Usuario logeado: <span sec:authentication="name"></span> | Roles: <span sec:authentication="principal.authorities"></span>		    
+		</p>
 		<p>
 			Powered by <a href="http://projects.spring.io/spring-boot">Spring
 				boot</a> y <a href="http://www.thymeleaf.org">Thymeleaf</a>.

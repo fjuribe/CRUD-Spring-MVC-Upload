@@ -13,6 +13,7 @@ public class LoginController {
 
 	@GetMapping("/login")
 	public String login(@RequestParam(value="error",required = false) String error,
+			@RequestParam(value="logaut",required = false) String logaut,
 			Model model,Principal principal,RedirectAttributes flash) {
 		if (principal!=null) {
 			flash.addAttribute("info", "Ya he iniciado sesion anteriormente");
@@ -21,6 +22,9 @@ public class LoginController {
 		
 		if(error!=null) {
 			model.addAttribute("error","error en el login :Nombre de usuario o contraseña . por favor vuelva a intentarlo");
+		}
+		if(logaut!=null) {
+			model.addAttribute("success","ha cerrado sesion con exito");
 		}
 		return "login";
 	}
